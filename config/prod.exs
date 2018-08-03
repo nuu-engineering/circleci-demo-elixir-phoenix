@@ -58,4 +58,21 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
+config :hello_phoenix, Remepe.Web.Endpoint
+  http: [port: {:system, "PORT"}],
+  url: [host: "...", port: {:system, "PORT"}],
+  server: true,
+  root: ".",
+  version: Mix.Project.config[:version],
+  cache_static_manifest: "priv/static/manifest.json"
+
+config :hello_phoenix, Remepe.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "hello_phoenix_dev",
+  hostname: "localhost",
+  pool_size: 10
+
+release_level=System.get_env("RELEASE_LEVEL")
 import_config "prod.secret.exs"
