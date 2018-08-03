@@ -3,15 +3,15 @@ APP="hello_phoenix"
 
 BUILD_HOST="45.55.241.163"
 BUILD_USER="yamil"
-BUILD_AT="/home/yamil/hello_phoenix_build/hello_phoenix"
+BUILD_AT="/home/yamil/hello_phoenix_build"
 
 PRODUCTION_HOSTS="45.55.241.163"
 PRODUCTION_USER="yamil"
-DELIVER_TO="/home/yamil"
+DELIVER_TO="/home/yamil/dist/hello_phoenix"
 
 STAGING_HOSTS="45.55.241.163"
 STAGING_USER="yamil"
-DELIVER_TO="/home/yamil"
+DELIVER_TO="/home/yamil/dist/hello_phoenix"
 
 pre_erlang_clean_compile() {
   status "Installing NPM dependencies"
