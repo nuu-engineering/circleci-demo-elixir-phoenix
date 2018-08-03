@@ -58,7 +58,7 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-config :hello_phoenix, HelloPhoenix.Web.Endpoint
+config :hello_phoenix, HelloPhoenix.Endpoint
   http: [port: {:system, "PORT"}],
   url: [host: "...", port: {:system, "PORT"}],
   server: true,
