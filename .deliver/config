@@ -1,0 +1,67 @@
+# .deliver/config
+APP="hello_phoenix"
+
+BUILD_HOST="45.55.241.163"
+BUILD_USER="yamil"
+BUILD_AT="/home/yamil/hello_phoenix_build/hello_phoenix"
+
+PRODUCTION_HOSTS="45.55.241.163"
+PRODUCTION_USER="yamil"
+DELIVER_TO="/home/yamil"
+
+STAGING_HOSTS="45.55.241.163"
+STAGING_USER="yamil"
+DELIVER_TO="/home/yamil"
+
+pre_erlang_clean_compile() {
+  status "Installing NPM dependencies"
+  __sync_remote "
+    [ -f ~/.profile ] && source ~/.profile
+    set -e
+
+    cd '$BUILD_AT'
+    npm install $SILENCE
+  "
+
+  status "Building static files"
+  # __sync_remote "
+  #   [ -f ~/.profile ] && source ~/.profile
+  #   set -e
+
+  #   cd '$BUILD_AT'
+  #   mkdir -p priv/static
+  #   npm run deploy $SILENCE
+  # "
+
+  status "Running phoenix.digest"
+  __sync_remote "
+    [ -f ~/.profile ] && source ~/.profile
+    set -e
+
+    cd '$BUILD_AT'
+    APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phoenix.digest $SILENCE
+  "
+}
+
+pre_init_app_remotely() {
+  # store current value to be able to restore it later
+  ACTUAL_PROJECT_DIR="$DELIVER_TO"
+  # set the build directory to the parent directory of the
+  # app (sub) directory for git operations
+  DELIVER_TO="$(dirname $DELIVER_TO)"
+  # repeat that for each subdir-level
+}
+
+pre_erlang_get_and_update_deps() {
+  local _prod_secret_path="/home/yamil/hello_phoenix_config/prod.secret.exs"
+  if [ "$TARGET_MIX_ENV" = "prod" ]; then
+    # __sync_remote "
+    #   ln -sfn '$_prod_secret_path' '$BUILD_AT/config/.secret.exs'
+    # "
+    __sync_remote "
+      cp '/webapps/REMEPE/hello_phoenix/config/prod.secret.exs' '$BUILD_AT/config/'
+    "
+  fi
+  # restore build directory including subdir for building
+  DELIVER_TO="$ACTUAL_PROJECT_DIR" 
+}
