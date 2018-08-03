@@ -58,14 +58,6 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-config :hello_phoenix, HelloPhoenix.Endpoint
-  http: [port: {:system, "PORT"}],
-  url: [host: "...", port: {:system, "PORT"}],
-  server: true,
-  root: ".",
-  version: Mix.Project.config[:version],
-  cache_static_manifest: "priv/static/manifest.json"
-
 config :hello_phoenix, HelloPhoenix.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
