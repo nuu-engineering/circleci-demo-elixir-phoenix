@@ -63,5 +63,5 @@ pre_erlang_get_and_update_deps() {
     "
   fi
   # restore build directory including subdir for building
-  DELIVER_TO="$ACTUAL_PROJECT_DIR" 
+  DELIVER_TO="$ACTUAL_PROJECT_DIR"
 }
